@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Add User</title>
+</head>
+<body>
+	<div>
+		<p>
+			<a th:href="@{/demo}">Home</a> | <a th:href="@{/listUser}">User
+				List</a>
+		</p>
+	</div>
+
+	<h1>Add User</h1>
+	<form action="#" th:action="@{/demo/saveUser}" th:object="${user}"
+		method="post">
+		<ul>
+			<li th:errors="*{id}" />
+			<li th:errors="*{name}" />
+			<li th:errors="*{age}" />
+			<li th:errors="*{salary}" />
+		</ul>
+		<table border="1">
+			<tr>
+				<td><label>Name</label></td>
+				<td><input type="text" th:field="*{name}" /></td>
+			</tr>
+			<tr>
+				<td><label>Age</label></td>
+				<td><input type="text" th:field="*{age}" /></td>
+			</tr>
+			<tr>
+				<td><label>Salary</label></td>
+				<td><input type="text" th:field="*{salary}" /></td>
+			</tr>
+			<tr>
+				<td><input type="submit" value="Submit" /></td>
+			</tr>
+		</table>
+	</form>
+
+</body>
+</html>
