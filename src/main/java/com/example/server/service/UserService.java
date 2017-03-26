@@ -2,24 +2,28 @@ package com.example.server.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.example.model.User;
 
 public interface UserService {
 	
-	User findById(long id);
+	public User findById(long id);
 	
-	User findByName(String name);
+	public User findByName(String name);
 	
-	void saveUser(User user);
+	public void saveUser(User user);
 	
-	void updateUser(User user);
+	public void updateUser(User user);
 	
-	void deleteUserById(long id);
+	public void deleteUserById(long id);
 
-	List<User> findAllUsers(); 
+	public List<User> findAllUsers(); 
 	
-	void deleteAllUsers();
+	public void deleteAllUsers();
 	
 	public boolean isUserExist(User user);
+	
+	public User checkCookie(HttpSession session);
 	
 }

@@ -4,13 +4,17 @@
 <title>Home</title>
 </head>
 <body>
-	<h1>
-		Welcome
-	</h1>
-	<table>
-		<tr>
-			<td><a th:href="@{/demo/listuser}">User List</a></td>
-		</tr>
-	</table>
+	<h1>Welcome</h1>
+	<div th:if="${session.username}">
+		<!-- if customer is not anonymous(logged in)-->
+		<div th:text=" 'Hi,' + ${session.username}"></div>
+		<a th:href="@{/demo/listuser}">User List</a>
+	</div>
+	<div th:unless="${session.username}">
+		<!-- if customer is anonymous-->
+		<div>
+			Welcome, Guest <a th:href="@{/demo/login}">Please Login</a>
+		</div>
+	</div>
 </body>
 </html>

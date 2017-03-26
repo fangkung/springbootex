@@ -1,83 +1,70 @@
 package com.example.server.service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.dao.UserDao;
 import com.example.model.User;
 
 
 @Service("userService")
 public class UserServiceImpl implements UserService{
 	
-	private static final AtomicLong counter = new AtomicLong();
+	@Autowired
+	private UserDao dao;
 	
-	private static List<User> users;
-	
-	static{
-		users= populateDummyUsers();
-	}
-
+	@Override
 	public List<User> findAllUsers() {
-		return users;
+		return dao.findAllUsers();
 	}
 	
+	@Override
 	public User findById(long id) {
-		for(User user : users){
-			if(user.getId() == id){
-				return user;
-			}
-		}
-		return null;
+		return dao.findById(id);
 	}
-	
+
+	@Override
 	public User findByName(String name) {
-		for(User user : users){
-			if(user.getName().equalsIgnoreCase(name)){
-				return user;
-			}
-		}
-		return null;
+		return dao.findByName(name);
 	}
-	
+
+	@Override
 	public void saveUser(User user) {
-		user.setId(counter.incrementAndGet());
-		users.add(user);
+		dao.saveUser(user);
 	}
 
+	@Override
 	public void updateUser(User user) {
-		int index = users.indexOf(user);
-		users.set(index, user);
+		dao.updateUser(user);
 	}
 
+	@Override
 	public void deleteUserById(long id) {
-		
-		for (Iterator<User> iterator = users.iterator(); iterator.hasNext(); ) {
-		    User user = iterator.next();
-		    if (user.getId() == id) {
-		        iterator.remove();
-		    }
-		}
+		dao.deleteUserById(id);
 	}
 
+	@Override
 	public boolean isUserExist(User user) {
-		return findByName(user.getName())!=null;
+		return dao.isUserExist(user);
 	}
 
-	private static List<User> populateDummyUsers(){
-		List<User> users = new ArrayList<User>();
-		users.add(new User(counter.incrementAndGet(),"Sam",30, 70000));
-		users.add(new User(counter.incrementAndGet(),"Tom",40, 50000));
-		users.add(new User(counter.incrementAndGet(),"Jerome",45, 30000));
-		users.add(new User(counter.incrementAndGet(),"Silvia",50, 40000));
-		return users;
-	}
-
+	@Override
 	public void deleteAllUsers() {
-		users.clear();
+		dao.deleteAllUsers();
+	}
+
+	@Override
+	public User checkCookie(HttpSession session){
+		User user = null;
+		String username = (String) session.getAttribute("username");
+		if(username != null)
+			user = findByName(username);
+		
+		return user;
 	}
 
 }

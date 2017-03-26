@@ -10,6 +10,9 @@
 			<a th:href="@{/demo}">Home</a> | <a th:href="@{/demo/addUser}">Add
 				User</a>
 		</p>
+		<p>
+			User: <label th:text="${session.username}"></label>
+		</p>
 	</div>
 
 	<h2>User List</h2>
